@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - ./data:/app/data
+    environment:
+      - LLM_PROVIDER=${LLM_PROVIDER:-groq}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - EMBEDDING_PROVIDER=huggingface
+      - VECTOR_DB=faiss
+      - DATABASE_URL=sqlite+aiosqlite:///./data/app.db
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    command: npm run dev

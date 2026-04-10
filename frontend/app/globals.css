@@ -1,0 +1,250 @@
+/* ============================================================
+   Global Design System — Autonomous AI System
+   Premium dark UI with subtle glass effects + brand gradients
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── CSS Variables ─────────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --bg-base:    #0b0d14;
+  --bg-surface: #12151e;
+  --bg-card:    #181c29;
+  --bg-card-2:  #1e2335;
+  --border:     rgba(255,255,255,0.07);
+  --border-2:   rgba(255,255,255,0.12);
+
+  /* Brand */
+  --brand:      #5a7eff;
+  --brand-glow: rgba(90,126,255,0.25);
+  --brand-2:    #9b6dff;
+
+  /* Text */
+  --text-primary:   rgba(255,255,255,0.95);
+  --text-secondary: rgba(255,255,255,0.60);
+  --text-muted:     rgba(255,255,255,0.35);
+
+  /* Agent Colors */
+  --agent-planner:  #f59e0b;
+  --agent-executor: #3b82f6;
+  --agent-debugger: #ef4444;
+  --agent-reviewer: #22c55e;
+
+  /* Status */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error:   #ef4444;
+  --info:    #3b82f6;
+}
+
+/* ── Base Reset ────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* ── Selection ─────────────────────────────────────────────── */
+::selection { background: rgba(90,126,255,0.3); color: white; }
+
+/* ── Component Classes ─────────────────────────────────────── */
+@layer components {
+
+  /* Glass card */
+  .glass {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--border);
+  }
+
+  .glass-hover {
+    @apply glass transition-all duration-200;
+  }
+  .glass-hover:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: var(--border-2);
+    box-shadow: 0 0 0 1px rgba(90,126,255,0.15);
+  }
+
+  /* Brand gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow button */
+  .btn-primary {
+    @apply relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all duration-200;
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+    box-shadow: 0 0 20px var(--brand-glow);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 30px var(--brand-glow), 0 8px 24px rgba(0,0,0,0.4);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  /* Ghost button */
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-white/70 transition-all duration-150;
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover {
+    color: white;
+    background: rgba(255,255,255,0.06);
+    border-color: var(--border-2);
+  }
+
+  /* Input */
+  .input {
+    @apply w-full px-4 py-3 rounded-xl text-sm text-white placeholder-white/30 transition-all duration-150 outline-none;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+  }
+  .input:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--brand-glow);
+  }
+
+  /* Chat bubbles */
+  .bubble-user {
+    @apply max-w-[80%] px-4 py-3 rounded-2xl rounded-tr-sm text-sm leading-relaxed;
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+    box-shadow: 0 4px 16px rgba(90,126,255,0.3);
+  }
+  .bubble-ai {
+    @apply max-w-[80%] px-4 py-3 rounded-2xl rounded-tl-sm text-sm leading-relaxed;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+
+  /* Agent badge */
+  .agent-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold shrink-0;
+  }
+
+  /* Sidebar nav item */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/60 transition-all duration-150 cursor-pointer;
+  }
+  .nav-item:hover, .nav-item.active {
+    color: white;
+    background: rgba(255,255,255,0.06);
+  }
+  .nav-item.active {
+    color: var(--brand);
+    background: rgba(90,126,255,0.10);
+    border: 1px solid rgba(90,126,255,0.20);
+  }
+
+  /* Background grid */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Typing indicator */
+  .typing-dot {
+    @apply w-2 h-2 rounded-full bg-white/40;
+    animation: typingBounce 1.2s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+}
+
+/* ── Keyframes ─────────────────────────────────────────────── */
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30%           { transform: translateY(-6px); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in  { animation: fadeIn  0.25s ease-out both; }
+.animate-slide-up { animation: slideUp 0.30s ease-out both; }
+
+/* ── Markdown Styles ───────────────────────────────────────── */
+.prose-custom {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.85);
+}
+.prose-custom h1, .prose-custom h2, .prose-custom h3 {
+  color: white;
+  font-weight: 600;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+}
+.prose-custom h1 { font-size: 1.25rem; }
+.prose-custom h2 { font-size: 1.1rem; }
+.prose-custom h3 { font-size: 1rem; }
+.prose-custom p { margin-bottom: 0.75em; }
+.prose-custom strong { color: white; font-weight: 600; }
+.prose-custom em { color: rgba(255,255,255,0.7); }
+.prose-custom ul, .prose-custom ol { padding-left: 1.5em; margin-bottom: 0.75em; }
+.prose-custom li { margin-bottom: 0.25em; }
+.prose-custom code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82em;
+  color: #a5b4fc;
+  background: rgba(90,126,255,0.1);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid rgba(90,126,255,0.2);
+}
+.prose-custom pre {
+  background: #0d0f16;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 0.75em 0;
+}
+.prose-custom pre code { background: none; border: none; padding: 0; color: inherit; }
+.prose-custom blockquote {
+  border-left: 3px solid var(--brand);
+  padding-left: 1rem;
+  color: rgba(255,255,255,0.6);
+  margin: 0.75em 0;
+}
+.prose-custom table { width: 100%; border-collapse: collapse; margin: 0.75em 0; }
+.prose-custom th, .prose-custom td {
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+.prose-custom th { background: rgba(255,255,255,0.05); font-weight: 600; color: white; }
+.prose-custom a { color: var(--brand); text-decoration: underline; }
